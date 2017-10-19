@@ -2,63 +2,63 @@ This document lists the neonCLUSTER related binaries available for download.
 
 PowerDNS
 --------
-auth/server 4.1.0-rc1:		https://jefflill.github.io/neoncluster/binaries/ubuntu/pdns-server_4.1.0~rc1-1pdns.xenial_amd64.deb
-remote-backend:	4.1.0~rc1	https://jefflill.github.io/neoncluster/binaries/ubuntu/pdns-backend-remote_4.1.0~rc1-1pdns.xenial_amd64
-dnsdist     1.2.0:			https://jefflill.github.io/neoncluster/binaries/ubuntu/dnsdist_1.2.0-1pdns.xenial_amd64.deb
-recursor    4.1.0~alpha1:	https://jefflill.github.io/neoncluster/binaries/ubuntu/pdns-recursor_4.1.0~alpha1-1pdns.xenial_amd64.deb
+auth/server     4.1.0-rc1:		https://jefflill.github.io/neoncluster/binaries/ubuntu/pdns-server_4.1.0~rc1-1pdns.xenial_amd64.deb
+remote-backend:	4.1.0~rc1		https://jefflill.github.io/neoncluster/binaries/ubuntu/pdns-backend-remote_4.1.0~rc1-1pdns.xenial_amd64
+dnsdist         1.2.0:			https://jefflill.github.io/neoncluster/binaries/ubuntu/dnsdist_1.2.0-1pdns.xenial_amd64.deb
+recursor        4.1.0~alpha1:	https://jefflill.github.io/neoncluster/binaries/ubuntu/pdns-recursor_4.1.0~alpha1-1pdns.xenial_amd64.deb
 
 
 How I obtained these packages:
 ------------------------------
 (see https://repo.powerdns.com/ for more information)
 
-	1. Start: an Ubuntu 16.04 based node or container.
+    1. Start: an Ubuntu 16.04 based node or container.
 
-	2. Run: the commands below under sudo.  Note that "41"
-	   and "12" specify the package version.  You'll need
-	   to edit these to retrieve different versions.
-	
-	   apt-get update
-	   apt-get install -qy aptitude curl
+    2. Run: the commands below under sudo.  Note that "41"
+       and "12" specify the package version.  You'll need
+       to edit these to retrieve different versions.
+    
+       apt-get update
+       apt-get install -qy aptitude curl
 
-	   echo "deb [arch=amd64] http://repo.powerdns.com/ubuntu xenial-auth-41 main"    > /etc/apt/sources.list.d/pdns-auth.list
-	   echo "deb [arch=amd64] http://repo.powerdns.com/ubuntu xenial-rec-41 main"     > /etc/apt/sources.list.d/pdns-rec.list
-	   echo "deb [arch=amd64] http://repo.powerdns.com/ubuntu xenial-dnsdist-12 main" > /etc/apt/sources.list.d/dnsdist.list
+       echo "deb [arch=amd64] http://repo.powerdns.com/ubuntu xenial-auth-41 main"    > /etc/apt/sources.list.d/pdns-auth.list
+       echo "deb [arch=amd64] http://repo.powerdns.com/ubuntu xenial-rec-41 main"     > /etc/apt/sources.list.d/pdns-rec.list
+       echo "deb [arch=amd64] http://repo.powerdns.com/ubuntu xenial-dnsdist-12 main" > /etc/apt/sources.list.d/dnsdist.list
 
-	   cat << EOF > /etc/apt/preferences.d/pdns
+       cat << EOF > /etc/apt/preferences.d/pdns
 Package: pdns-*
 Pin: origin repo.powerdns.com
 Pin-Priority: 600
 EOF
 
-	   cat << EOF > /etc/apt/preferences.d/dnsdist
+       cat << EOF > /etc/apt/preferences.d/dnsdist
 Package: dnsdist*
 Pin: origin repo.powerdns.com
 Pin-Priority: 600
 EOF
 
-	   curl https://repo.powerdns.com/FD380FBB-pub.asc | sudo apt-key add -
-	   apt-get update
+       curl https://repo.powerdns.com/FD380FBB-pub.asc | sudo apt-key add -
+       apt-get update
 
-	3. For each package: you'll need to list the available versions and then
-	   download a specific version.  The [.deb] file will be written the the
-	   current directory.  Here are example commands for specific versions:
-	   
-	   aptitude versions pdns-server
-	   aptitude download pdns-server=4.1.0~rc1-1pdns.xenial
-	   
-	   aptitude versions pdns-backend-remote
-	   aptitude download pdns-backend-remote=4.1.0~rc1-1pdns.xenial
-	   
-	   aptitude versions pdns-recursor
-	   aptitude download pdns-recursor=4.1.0~alpha1-1pdns.xenial
-	   
-	   aptitude versions dnsdist
-	   aptitude download dnsdist=1.2.0-1pdns.xenial
-	   
-	4. Use [gdebi] (instead of [dpkg]) to install packages AND their
-	   dependencies ([dpkg] doesn't install dependencies), esample:
+    3. For each package: you'll need to list the available versions and then
+       download a specific version.  The [.deb] file will be written the the
+       current directory.  Here are example commands for specific versions:
+       
+       aptitude versions pdns-server
+       aptitude download pdns-server=4.1.0~rc1-1pdns.xenial
+       
+       aptitude versions pdns-backend-remote
+       aptitude download pdns-backend-remote=4.1.0~rc1-1pdns.xenial
+       
+       aptitude versions pdns-recursor
+       aptitude download pdns-recursor=4.1.0~alpha1-1pdns.xenial
+       
+       aptitude versions dnsdist
+       aptitude download dnsdist=1.2.0-1pdns.xenial
+       
+    4. Use [gdebi] (instead of [dpkg]) to install packages AND their
+       dependencies ([dpkg] doesn't install dependencies), esample:
 
-	   gdebi --non-interactive dnsdist_1.2.0-1pdns.xenial_amd64.deb
+       gdebi --non-interactive dnsdist_1.2.0-1pdns.xenial_amd64.deb
 
 NOTE: Deploy the same build versions for PDNS Server and any backends.
